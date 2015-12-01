@@ -17,7 +17,10 @@ public class FragmentsStats {
 
     private long fragmentsNumber; // number of fragments
     private long firstFragmentSize; // first fragment size (in bytes)
-    private long totalSize; // total fragments size (in bytes)
+
+    private String totalSize;
+//    private int totalSizeLow; // low bits
+//    private int totalSizeHigh; // high bits
 
     /**
      * Constructs an FragmentsStats.
@@ -63,7 +66,7 @@ public class FragmentsStats {
         return "Statistics information for \"" + datapath + "\" "
                 + " Number of Fragments: " + stats.fragmentsNumber + ", first Fragment size: "
                 + stats.firstFragmentSize + ", total size: "
-                + stats.totalSize;
+                + stats.getTotalSize();
     }
 
     /**
@@ -92,18 +95,53 @@ public class FragmentsStats {
         this.firstFragmentSize = firstFragmentSize;
     }
 
-    /**
-     * Returns the total size in bytes of a given source.
-     * Usually it means the aggregation of all its fragments size.
-     *
-     * @return total size (in bytes)
-     */
-    public long getTotalSize() {
-        return totalSize;
+//    /**
+//     * Returns the total size in bytes of a given source.
+//     * Usually it means the aggregation of all its fragments size.
+//     *
+//     * @return total size (in bytes)
+//     */
+//    public long totalSize() {
+//        long totalSize = getTotalSizeLow();
+//        totalSize = totalSize | (getTotalSizeHigh()) << 32;
+//        return totalSize;
+//    }
+
+
+
+//    private void setLowHighSize(long totalSize) {
+//        if (totalSize > Integer.MAX_VALUE) {
+//            setTotalSizeHigh((int) (totalSize >> 32));
+//            setTotalSizeLow((int) ((totalSize << 32) >> 32));
+//        }
+//        else {
+//            setTotalSizeHigh(0);
+//            setTotalSizeLow((int) totalSize);
+//        }
+//    }
+
+    private void setTotalSize(long size) {
+        this.totalSize = String.valueOf(size);
     }
 
-    private void setTotalSize(long totalSize) {
-        this.totalSize = totalSize;
+    public String getTotalSize() {
+        return this.totalSize;
     }
 
+//
+//    public int getTotalSizeLow() {
+//        return totalSizeLow;
+//    }
+//
+//    private void setTotalSizeLow(int totalSizeLow) {
+//        this.totalSizeLow = totalSizeLow;
+//    }
+//
+//    public int getTotalSizeHigh() {
+//        return totalSizeHigh;
+//    }
+//
+//    private void setTotalSizeHigh(int totalSizeHigh) {
+//        this.totalSizeHigh = totalSizeHigh;
+//    }
 }
