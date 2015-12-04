@@ -186,9 +186,14 @@ static PxfFragmentStatsElem *parse_get_frag_stats_response(StringInfo rest_buf)
 	struct json_object *js_first_frag_size = json_object_object_get(head, "firstFragmentSize");
 	statsElem->firstFragSize = json_object_get_int(js_first_frag_size);
 
+	//json_object_get_int
+	//json_object_get_string
+
 	/* 2. total size */
 	struct json_object *js_total_size = json_object_object_get(head, "totalSize");
-	statsElem->totalSize = json_object_get_int(js_total_size);
+	statsElem->totalSize = atoll(json_object_get_string(js_total_size));
+	elog(INFO, "test %lld", statsElem->totalSize);
+	elog(INFO, "js_total_size: %s", json_object_get_string(js_total_size));
 
 	return statsElem;
 }

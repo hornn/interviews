@@ -48,6 +48,7 @@ public class FragmentsStats {
         // mapper serializes all members of the class by default
         return "{\"PXFFragmentsStats\":" + mapper.writeValueAsString(stats)
                 + "}";
+
     }
 
     /**
@@ -92,14 +93,20 @@ public class FragmentsStats {
         this.firstFragmentSize = firstFragmentSize;
     }
 
+    public static String getTotalSizeInString(long totalSize) {
+        return new Long(totalSize).toString();
+    }
+
     /**
      * Returns the total size in bytes of a given source.
      * Usually it means the aggregation of all its fragments size.
      *
      * @return total size (in bytes)
      */
-    public long getTotalSize() {
-        return totalSize;
+    public String getTotalSize() {
+        // return totalSize;
+
+        return getTotalSizeInString(totalSize);
     }
 
     private void setTotalSize(long totalSize) {
