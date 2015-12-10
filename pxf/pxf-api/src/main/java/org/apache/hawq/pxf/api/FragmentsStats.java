@@ -17,7 +17,7 @@ public class FragmentsStats {
 
     private long fragmentsNumber; // number of fragments
     private long firstFragmentSize; // first fragment size (in bytes)
-    private long totalSize; // total fragments size (in bytes)
+    private String totalSize; // total fragments size (in bytes)
 
     /**
      * Constructs an FragmentsStats.
@@ -98,12 +98,12 @@ public class FragmentsStats {
      *
      * @return total size (in bytes)
      */
-    public long getTotalSize() {
+    public String getTotalSize() {
         return totalSize;
     }
 
-    private void setTotalSize(long totalSize) {
-        this.totalSize = totalSize;
+    private void setTotalSize(Long totalSize) {
+        this.totalSize = totalSize.toString();
     }
 
 }

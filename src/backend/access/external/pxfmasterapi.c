@@ -18,6 +18,8 @@ static List* parse_get_fragments_response(List* fragments, StringInfo rest_buf);
 static void ha_failover(GPHDUri *hadoop_uri, ClientContext *client_context, char* rest_msg);
 static void rest_request(GPHDUri *hadoop_uri, ClientContext* client_context, char *rest_msg);
 static char* concat(char *body, char *tail);
+static int64 stringToInt64(char *stringValue);
+
 
 /*
  * Obtain the datanode REST servers host/port data
@@ -188,10 +190,31 @@ static PxfFragmentStatsElem *parse_get_frag_stats_response(StringInfo rest_buf)
 
 	/* 2. total size */
 	struct json_object *js_total_size = json_object_object_get(head, "totalSize");
-	statsElem->totalSize = json_object_get_int(js_total_size);
+	char* total_size = json_object_get_string(js_total_size);
+	int64 total_size_int64 = stringToInt64(total_size);
+	statsElem->totalSize = total_size_int64;
 
 	return statsElem;
 }
+
+/*
+ * Function to convert a string to int64
+ * 	- Handles only positive integers
+ */
+static int64 stringToInt64(char *stringValue){
+
+	int length = strlen(stringValue);
+
+	int64 number = 0;
+	for(int i = 0; i < length; i++){
+		int int_value = stringValue[i] - '0';
+		number = (number*10) + int_value;
+	}
+
+	return number;
+}
+
+
 
 /*
  * ha_failover
