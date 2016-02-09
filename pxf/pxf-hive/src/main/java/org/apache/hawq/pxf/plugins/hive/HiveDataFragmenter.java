@@ -20,6 +20,7 @@ package org.apache.hawq.pxf.plugins.hive;
  */
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Properties;
@@ -82,6 +83,8 @@ public class HiveDataFragmenter extends Fragmenter {
     private HiveMetaStoreClient client;
 
     protected boolean filterInFragmenter = false;
+
+    List<Long> fragmentsSize = new ArrayList<Long>();
 
     // Data structure to hold hive partition names if exist, to be used by
     // partition filtering
@@ -312,7 +315,7 @@ public class HiveDataFragmenter extends Fragmenter {
             FileSplit fsp = (FileSplit) split;
             String[] hosts = fsp.getLocations();
             String filepath = fsp.getPath().toUri().getPath();
-
+            fragmentsSize.add(fsp.getLength());
             byte[] locationInfo = HdfsUtilities.prepareFragmentMetadata(fsp);
             Fragment fragment = new Fragment(filepath, hosts, locationInfo,
                     makeUserData(tablePartition));
@@ -467,6 +470,20 @@ public class HiveDataFragmenter extends Fragmenter {
      */
     @Override
     public FragmentsStats getFragmentsStats() throws Exception {
+        List<Fragment> f = getFragments();
+        int numFrag = f.size();
+        if (f.get(0).)
+        for (int i = 0; i < f.size(); i++){
+
+        }
+        // number of fragments
+
+        // size of first fragment
+
+        // total size
+
+
+
         throw new UnsupportedOperationException(
                 "ANALYZE for Hive plugin is not supported");
     }
